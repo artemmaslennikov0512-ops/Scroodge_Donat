@@ -1,0 +1,30 @@
+# Твой Postgres на 5433. Миграции: npm run db:migrate.
+# С docker-compose.override.yml (режим разработки): docker compose up -d — код монтируется, изменения без пересборки.
+# Только прод-сборка: docker compose -f docker-compose.yml up -d (без override).
+#
+# Логи: docker compose logs -f app   ( -f = в реальном времени )
+
+name: donation-site
+
+services:
+  app:
+    build: .
+    tty: true
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: ${DATABASE_URL_DOCKER}
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+      NODE_ENV: production
+      COOKIE_SECURE: ${COOKIE_SECURE:-}
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-change-me-in-production}
+    env_file:
+      - .env
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "10"

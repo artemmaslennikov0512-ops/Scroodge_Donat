@@ -1,0 +1,22 @@
+# Автодеплой на Beget при push в main.
+# В настройках репозитория добавьте секреты: BEGET_SSH_HOST, BEGET_SSH_USER, BEGET_SSH_KEY.
+
+name: Deploy to Beget
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.BEGET_SSH_HOST }}
+          username: ${{ secrets.BEGET_SSH_USER }}
+          key: ${{ secrets.BEGET_SSH_KEY }}
+          script: |
+            cd ~/donation-site
+            bash scripts/deploy-on-server.sh

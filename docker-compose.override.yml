@@ -1,0 +1,32 @@
+# Режим разработки: исходники монтируются, изменения видны без пересборки.
+# Запуск: docker compose up --build -d  (первый раз — сборка, дальше только up -d)
+# Остановка: docker compose down
+# Логи: docker compose logs -f app
+
+name: donation-site
+
+services:
+  app:
+    build:
+      context: .
+      target: builder
+    tty: true
+    stdin_open: true
+    command: sh -c "npx prisma generate && echo '[app] Starting dev server...' && npm run dev"
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./app:/app/app
+      - ./components:/app/components
+      - ./lib:/app/lib
+      - ./public:/app/public
+      - ./prisma:/app/prisma
+      - ./infrastructure:/app/infrastructure
+      - ./application:/app/application
+      - ./middleware.ts:/app/middleware.ts
+    restart: "no"
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "10"
