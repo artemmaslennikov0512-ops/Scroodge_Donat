@@ -61,9 +61,9 @@ export function checkAdminLoginRateLimit(ip: string): { allowed: boolean; reason
   return { allowed: true };
 }
 
-// Регистрация: защита от массовой регистрации
+// Регистрация: защита от массовой регистрации (с запасом на повторные отправки формы)
 const REGISTER_WINDOW_MS = 60 * 60 * 1000; // 1 ч
-const REGISTER_MAX_PER_IP = 5;
+const REGISTER_MAX_PER_IP = 15;
 const registerStore = new Map<string, Entry>();
 
 export function checkRegisterRateLimit(ip: string): { allowed: boolean; reason?: string } {

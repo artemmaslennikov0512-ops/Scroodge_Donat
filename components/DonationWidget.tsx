@@ -173,8 +173,10 @@ export function DonationWidget({
         </div>
 
         <div>
-          <label className="block text-gray-300 text-sm mb-1">Или введите сумму (₽)</label>
+          <label htmlFor="donation-amount" className="block text-gray-300 text-sm mb-1">Или введите сумму (₽)</label>
           <input
+            id="donation-amount"
+            name="amount"
             type="number"
             {...register("amount", { valueAsNumber: true })}
             min={minAmount}
@@ -186,10 +188,12 @@ export function DonationWidget({
         </div>
 
         <div>
-          <label className="block text-gray-300 text-sm mb-1">Ваше имя (необязательно)</label>
+          <label htmlFor="donation-name" className="block text-gray-300 text-sm mb-1">Ваше имя (необязательно)</label>
           <div className="relative">
             <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
             <input
+              id="donation-name"
+              name="name"
               type="text"
               {...register("name")}
               className="w-full pl-10 pr-4 py-3 bg-black/30 border border-cyan-500/40 rounded-lg text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition"
@@ -223,10 +227,12 @@ export function DonationWidget({
         </div>
 
         <div>
-          <label className="block text-gray-300 text-sm mb-1">Сообщение (необязательно)</label>
+          <label htmlFor="donation-message" className="block text-gray-300 text-sm mb-1">Сообщение (необязательно)</label>
           <div className="relative">
             <FiMessageSquare className="absolute left-3 top-3 text-gray-500" />
             <textarea
+              id="donation-message"
+              name="message"
               {...register("message")}
               rows={3}
               className="w-full pl-10 pr-4 py-3 bg-black/30 border border-cyan-500/40 rounded-lg text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition resize-none"
@@ -237,8 +243,10 @@ export function DonationWidget({
         </div>
 
         {allowAnonymous && (
-          <label className="flex items-center gap-2 cursor-pointer">
+          <label htmlFor="donation-anonymous" className="flex items-center gap-2 cursor-pointer">
             <input
+              id="donation-anonymous"
+              name="isAnonymous"
               type="checkbox"
               {...register("isAnonymous")}
               className="rounded border-cyan-500/40 bg-black/30 text-cyan-400 focus:ring-cyan-400"

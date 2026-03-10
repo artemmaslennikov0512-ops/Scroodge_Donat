@@ -111,11 +111,14 @@ function ResetPasswordContent() {
             {!message && (
               <>
                 <div>
-                  <label className="block text-gray-300 text-sm mb-1">Новый пароль</label>
+                  <label htmlFor="reset-new-password" className="block text-gray-300 text-sm mb-1">Новый пароль</label>
                   <div className="relative">
                     <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                     <input
+                      id="reset-new-password"
+                      name="newPassword"
                       type={showPassword ? "text" : "password"}
+                      autoComplete="new-password"
                       placeholder="••••••••"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
@@ -134,11 +137,14 @@ function ResetPasswordContent() {
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-sm mb-1">Подтвердите пароль</label>
+                  <label htmlFor="reset-confirm-password" className="block text-gray-300 text-sm mb-1">Подтвердите пароль</label>
                   <div className="relative">
                     <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                     <input
+                      id="reset-confirm-password"
+                      name="confirmPassword"
                       type={showPassword ? "text" : "password"}
+                      autoComplete="new-password"
                       placeholder="••••••••"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}

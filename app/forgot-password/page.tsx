@@ -88,10 +88,12 @@ export default function ForgotPasswordPage() {
             )}
 
             <div>
-              <label className="block text-gray-300 text-sm mb-1">Логин</label>
+              <label htmlFor="forgot-login" className="block text-gray-300 text-sm mb-1">Логин</label>
               <div className="relative">
                 <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                 <input
+                  id="forgot-login"
+                  name="login"
                   type="text"
                   placeholder="username"
                   value={login}
@@ -103,11 +105,14 @@ export default function ForgotPasswordPage() {
             </div>
 
             <div>
-              <label className="block text-gray-300 text-sm mb-1">Номер телефона</label>
+              <label htmlFor="forgot-phone" className="block text-gray-300 text-sm mb-1">Номер телефона</label>
               <div className="relative">
                 <FiPhone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                 <input
+                  id="forgot-phone"
+                  name="phone"
                   type="tel"
+                  autoComplete="tel"
                   placeholder="+7 999 123-45-67"
                   value={phone}
                   onChange={(e) => {

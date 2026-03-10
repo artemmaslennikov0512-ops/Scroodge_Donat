@@ -21,9 +21,10 @@ RUN mkdir -p public
 ENV DATABASE_URL="postgresql://build:build@localhost:5432/build"
 RUN npx prisma generate
 
-# Кэш сборки Next.js — повторные сборки быстрее при небольших изменениях кода
+# Сборка только в production — иначе в браузер попадут webpack-hmr и react-dom-client.development.js
+ENV NODE_ENV=production
 RUN --mount=type=cache,target=/app/.next/cache \
-    npm run build
+    NODE_ENV=production npm run build
 
 # Продакшен-образ
 FROM node:20-alpine AS runner
@@ -43,6 +44,8 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+# Зависимости Prisma CLI для migrate deploy при старте контейнера
+COPY --from=builder /app/node_modules/@prisma/config ./node_modules/@prisma/config
 COPY --from=builder /app/node_modules/.bin ./node_modules/.bin
 
 RUN chown -R nextjs:nodejs /app

@@ -156,11 +156,14 @@ function LoginPageContent() {
             )}
 
             <div>
-              <label className="block text-gray-300 text-sm mb-1">Email</label>
+              <label htmlFor="login-email" className="block text-gray-300 text-sm mb-1">Email</label>
               <div className="relative">
                 <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                 <input
+                  id="login-email"
+                  name="email"
                   type="email"
+                  autoComplete="email"
                   placeholder="your@email.com"
                   value={formData.email}
                   onChange={(e) =>
@@ -173,11 +176,14 @@ function LoginPageContent() {
             </div>
 
             <div>
-              <label className="block text-gray-300 text-sm mb-1">Пароль</label>
+              <label htmlFor="login-password" className="block text-gray-300 text-sm mb-1">Пароль</label>
               <div className="relative">
                 <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                 <input
+                  id="login-password"
+                  name="password"
                   type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
                   placeholder="••••••••"
                   value={formData.password}
                   onChange={(e) =>
@@ -197,8 +203,10 @@ function LoginPageContent() {
             </div>
 
             <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2">
+              <label htmlFor="login-remember" className="flex items-center gap-2 cursor-pointer">
                 <input
+                  id="login-remember"
+                  name="remember"
                   type="checkbox"
                   className="rounded border-cyan-500/40 bg-black/30 text-cyan-400 focus:ring-cyan-400"
                 />

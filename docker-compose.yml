@@ -1,5 +1,6 @@
-# Один конфиг для прода и сервера: свой Postgres + приложение.
-# Сервер: docker compose up -d --build  (порт 3001, чтобы не пересекаться с другим сайтом).
+# Один конфиг: Postgres + приложение. Деплой: git pull → docker compose up -d --build
+# Если в браузере ошибка webpack-hmr или react-dom-client.development.js — пересобрать без кэша:
+#   docker compose build --no-cache app && docker compose up -d
 # Логи: docker compose logs -f app
 
 name: scrooge-donat
@@ -25,6 +26,13 @@ services:
     restart: unless-stopped
     ports:
       - "3001:3000"
+    # Первый запрос к /api/health прогревает Next.js и Prisma — пользователи не попадают на холодный старт
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://127.0.0.1:3000/api/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))\""]
+      interval: 30s
+      timeout: 15s
+      start_period: 10s
+      retries: 3
     environment:
       NODE_ENV: production
       PORT: "3000"

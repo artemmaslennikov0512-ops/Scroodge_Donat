@@ -122,10 +122,18 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Registration error:", error instanceof Error ? error.message : error);
-    return NextResponse.json(
-      { message: "Ошибка при создании пользователя" },
-      { status: 500 }
-    );
+    const err = error instanceof Error ? error : new Error(String(error));
+    const prismaCode = (error as { code?: string })?.code;
+    console.error("Registration error:", err.message, prismaCode ? `[${prismaCode}]` : "");
+    if (process.env.NODE_ENV === "development") {
+      console.error(err.stack);
+    }
+    const message =
+      prismaCode === "P2002"
+        ? "Пользователь с таким email, именем или телефоном уже существует."
+        : prismaCode === "P2021" || err.message?.includes("does not exist")
+          ? "Ошибка БД: таблицы не найдены. Выполните миграции (prisma migrate deploy)."
+          : "Ошибка при создании пользователя. Проверьте логи приложения.";
+    return NextResponse.json({ message }, { status: 500 });
   }
 }

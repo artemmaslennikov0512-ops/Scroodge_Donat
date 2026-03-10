@@ -195,12 +195,14 @@ export default function Register() {
 
             <form className="space-y-6" onSubmit={onSubmit}>
               <div>
-                <label className="block text-gray-300 mb-2 text-sm">
+                <label htmlFor="register-username" className="block text-gray-300 mb-2 text-sm">
                   Имя пользователя
                 </label>
                 <div className="relative">
                   <FiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
                   <input
+                    id="register-username"
+                    name="username"
                     type="text"
                     value={formData.username}
                     onChange={(e) =>
@@ -215,11 +217,14 @@ export default function Register() {
               </div>
 
               <div>
-                <label className="block text-gray-300 mb-2 text-sm">Email</label>
+                <label htmlFor="register-email" className="block text-gray-300 mb-2 text-sm">Email</label>
                 <div className="relative">
                   <FiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
                   <input
+                    id="register-email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     value={formData.email}
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
@@ -232,13 +237,16 @@ export default function Register() {
               </div>
 
               <div>
-                <label className="block text-gray-300 mb-2 text-sm">
+                <label htmlFor="register-phone" className="block text-gray-300 mb-2 text-sm">
                   Номер телефона
                 </label>
                 <div className="relative">
                   <FiPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
                   <input
+                    id="register-phone"
+                    name="phone"
                     type="tel"
+                    autoComplete="tel"
                     value={formData.phone}
                     onChange={(e) => {
                       setFormData({ ...formData, phone: e.target.value });
@@ -258,13 +266,16 @@ export default function Register() {
               </div>
 
               <div>
-                <label className="block text-gray-300 mb-2 text-sm">
+                <label htmlFor="register-password" className="block text-gray-300 mb-2 text-sm">
                   Пароль
                 </label>
                 <div className="relative">
                   <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
                   <input
+                    id="register-password"
+                    name="password"
                     type={showPassword ? "text" : "password"}
+                    autoComplete="new-password"
                     value={formData.password}
                     onChange={(e) =>
                       setFormData({ ...formData, password: e.target.value })
@@ -334,13 +345,16 @@ export default function Register() {
               </div>
 
               <div>
-                <label className="block text-gray-300 mb-2 text-sm">
+                <label htmlFor="register-confirm-password" className="block text-gray-300 mb-2 text-sm">
                   Подтвердите пароль
                 </label>
                 <div className="relative">
                   <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
                   <input
+                    id="register-confirm-password"
+                    name="confirmPassword"
                     type="password"
+                    autoComplete="new-password"
                     value={formData.confirmPassword}
                     onChange={(e) =>
                       setFormData({

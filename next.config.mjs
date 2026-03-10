@@ -2,6 +2,8 @@
 const config = {
   reactStrictMode: true,
   output: "standalone",
+  // Иконка "N" в углу и задержки первых заходов — только в next dev. В проде не показывать.
+  devIndicators: false,
   async headers() {
     return [
       {
