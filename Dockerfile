@@ -44,9 +44,11 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
-# Зависимости Prisma CLI для migrate deploy при старте контейнера
-COPY --from=builder /app/node_modules/@prisma/config ./node_modules/@prisma/config
+COPY --from=builder /app/node_modules/effect ./node_modules/effect
 COPY --from=builder /app/node_modules/.bin ./node_modules/.bin
+
+# Глобальный prisma для migrate deploy — в образе не хватает зависимостей @prisma/config при npx prisma
+RUN npm install -g prisma@6 && npm cache clean --force
 
 RUN chown -R nextjs:nodejs /app
 
@@ -60,4 +62,4 @@ ENV HOSTNAME="0.0.0.0"
 # Сначала применяем миграции (или db push, если БД без истории миграций), затем запускаем сервер.
 # Ошибки не скрываем — иначе при проблемах с БД вход/регистрация не работают, а причину не видно.
 # Логи приложения видны в: docker compose logs -f app
-CMD ["sh", "-c", "npx prisma migrate deploy || npx prisma db push --skip-generate --accept-data-loss; echo '[app] Starting Node server...'; exec node server.js"]
+CMD ["sh", "-c", "/usr/local/bin/prisma migrate deploy || /usr/local/bin/prisma db push --skip-generate --accept-data-loss; echo '[app] Starting Node server...'; exec node server.js"]
