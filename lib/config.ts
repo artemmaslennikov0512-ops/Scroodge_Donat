@@ -64,5 +64,5 @@ export function getBaseUrl(): string {
 export function getSmtpFrom(smtpUser: string | undefined): string {
   const from = getEnv().SMTP_FROM;
   if (from?.trim()) return from;
-  return smtpUser ? `"DonateStream" <${smtpUser}>` : "DonateStream";
+  return smtpUser ? `"ScroogeDonat" <${smtpUser}>` : "ScroogeDonat";
 }

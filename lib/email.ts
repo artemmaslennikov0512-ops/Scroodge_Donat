@@ -6,7 +6,7 @@
 import nodemailer from "nodemailer";
 import { getBaseUrl, getSmtpFrom, getNodeEnv } from "@/lib/config";
 
-const APP_NAME = "DonateStream";
+const APP_NAME = "ScroogeDonat";
 
 /** Проверка, что SMTP настроен под Mail.ru (smtp.mail.ru). */
 function isMailRu(): boolean {
@@ -46,6 +46,12 @@ async function sendMailIfConfigured(options: SendMailOptions): Promise<void> {
   } else if (getNodeEnv() === "development" && devLog !== undefined) {
     // eslint-disable-next-line no-console
     console.log("[dev]", devLog);
+  } else {
+    // В production без SMTP письма не уходят — логируем, чтобы было видно в docker compose logs
+    console.warn(
+      "[email] SMTP не настроен (SMTP_HOST, SMTP_USER, SMTP_PASSWORD в .env на сервере). Письмо не отправлено:",
+      { to, subject: subject.slice(0, 50) }
+    );
   }
 }
 
@@ -197,14 +203,14 @@ export async function sendPasswordChangeEmail(email: string, resetUrl: string): 
         </div>
         <p style="font-size: 14px; color: #6b7280;">Если вы не запрашивали смену пароля, проигнорируйте это письмо. Пароль не изменится.</p>
         <p style="font-size: 14px; color: #6b7280;">Ссылка: ${resetUrl}</p>
-        <div class="footer"><p>© ${new Date().getFullYear()} DonateStream.</p></div>
+        <div class="footer"><p>© ${new Date().getFullYear()} ScroogeDonat.</p></div>
       </div>
     </body>
     </html>
   `;
   await sendMailIfConfigured({
     to: email,
-    subject: "Смена пароля — DonateStream",
+    subject: "Смена пароля — ScroogeDonat",
     html,
     devLog: `Password change email: ${email} Link: ${resetUrl}`,
   });

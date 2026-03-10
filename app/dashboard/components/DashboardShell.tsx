@@ -48,6 +48,12 @@ export default function DashboardShell({ children }: { children: React.ReactNode
 
   const user = session.user as { name?: string | null; username?: string | null; image?: string | null; isVerified?: boolean; isStreamer?: boolean; streamerVerified?: boolean };
   const isVerified = user?.isVerified ?? false;
+
+  // Требуем подтверждение email: без верификации доступ только к странице подтверждения
+  if (!isVerified) {
+    router.replace("/verify-email");
+    return null;
+  }
   const streamerVerified = user?.streamerVerified ?? user?.isStreamer ?? false;
   const displayName = user?.name || user?.username || "Пользователь";
   const avatar = user?.image ?? "https://i.pravatar.cc/150?img=1";
