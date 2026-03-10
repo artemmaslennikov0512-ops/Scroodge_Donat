@@ -35,8 +35,9 @@ cd html
 apt update && apt install -y postgresql postgresql-contrib
 systemctl start postgresql && systemctl enable postgresql
 
-sudo -u postgres psql -c "CREATE USER donation_user WITH PASSWORD 'ВАШ_НАДЁЖНЫЙ_ПАРОЛЬ';"
-sudo -u postgres psql -c "CREATE DATABASE donations OWNER donation_user;"
+# Если нужен отдельный пользователь (иначе используйте postgres):
+# sudo -u postgres psql -c "CREATE USER donation_user WITH PASSWORD 'ВАШ_ПАРОЛЬ';"
+# sudo -u postgres psql -c "CREATE DATABASE donations OWNER donation_user;"
 ```
 
 Пароль запомните — он понадобится в `.env`.
@@ -54,7 +55,7 @@ nano .env
 NODE_ENV=production
 NEXT_PUBLIC_APP_URL=https://scrooge-donat.ru
 NEXTAUTH_URL=https://scrooge-donat.ru
-DATABASE_URL=postgresql://donation_user:ВАШ_НАДЁЖНЫЙ_ПАРОЛЬ@localhost:5432/donations
+DATABASE_URL=postgresql://postgres:ВАШ_ПАРОЛЬ@localhost:5433/donations
 NEXTAUTH_SECRET=случайная-строка-не-менее-32-символов
 JWT_SECRET=другая-случайная-строка-32-символа
 AUTH_TRUST_HOST=true

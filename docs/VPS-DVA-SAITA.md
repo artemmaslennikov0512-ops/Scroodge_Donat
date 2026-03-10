@@ -70,12 +70,24 @@ pm2 save
 nano /etc/nginx/sites-available/scrooge-donat
 ```
 
-Содержимое (только для scrooge-donat.ru):
+Содержимое (только для scrooge-donat.ru). Для HTTPS нужен сертификат с Beget — см. **docs/SSL-BEGET-NA-VPS.md**.
 
 ```nginx
 server {
     listen 80;
     server_name scrooge-donat.ru www.scrooge-donat.ru;
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl;
+    server_name scrooge-donat.ru www.scrooge-donat.ru;
+
+    ssl_certificate     /etc/nginx/ssl/scrooge-donat.ru.crt;
+    ssl_certificate_key /etc/nginx/ssl/scrooge-donat.ru.key;
+
     location / {
         proxy_pass http://127.0.0.1:3001;
         proxy_http_version 1.1;
@@ -86,6 +98,8 @@ server {
     }
 }
 ```
+
+Файлы сертификата и ключа нужно создать на VPS из панели Beget (см. docs/SSL-BEGET-NA-VPS.md).
 
 Включить только этот сайт:
 

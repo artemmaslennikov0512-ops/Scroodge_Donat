@@ -7,7 +7,7 @@ set -e
 
 APP_DIR="${APP_DIR:-/var/www/html}"
 DB_NAME="${DB_NAME:-donations}"
-DB_USER="${DB_USER:-donation_user}"
+DB_USER="${DB_USER:-postgres}"
 DOMAIN="${DOMAIN:-scrooge-donat.ru}"
 
 echo "==> Обновление пакетов..."

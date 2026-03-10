@@ -1,6 +1,8 @@
 # Режим разработки: исходники монтируются, изменения видны без пересборки.
-# Запуск: docker compose up --build -d  (первый раз — сборка, дальше только up -d)
-# Остановка: docker compose down
+# Только для локальной разработки. На сервере НЕ использовать — иначе запустится next dev
+# вместо node server.js и будет 502 (порт 3001 в контейнере, а маппинг 3001:3000).
+# На VPS: mv docker-compose.override.yml docker-compose.override.yml.disabled
+# Запуск: docker compose up --build -d
 # Логи: docker compose logs -f app
 
 name: donation-site

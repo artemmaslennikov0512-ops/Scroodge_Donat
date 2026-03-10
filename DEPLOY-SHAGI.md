@@ -107,7 +107,7 @@ nano .env
 NODE_ENV=production
 NEXT_PUBLIC_APP_URL=https://scrooge-donat.ru
 NEXTAUTH_URL=https://scrooge-donat.ru
-DATABASE_URL=postgresql://donation_user:ТВОЙ_ПАРОЛЬ_БД@localhost:5432/donations
+DATABASE_URL=postgresql://postgres:ТВОЙ_ПАРОЛЬ_БД@localhost:5433/donations
 NEXTAUTH_SECRET=любая-длинная-случайная-строка-32-символа
 JWT_SECRET=другая-длинная-случайная-строка-32-символа
 AUTH_TRUST_HOST=true

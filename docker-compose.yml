@@ -27,6 +27,7 @@ services:
       - "3001:3000"
     environment:
       NODE_ENV: production
+      PORT: "3000"
       DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-89069813784Zaqq123}@db:5432/donations
       NEXTAUTH_URL: ${NEXTAUTH_URL:-https://scrooge-donat.ru}
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
